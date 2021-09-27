@@ -22,7 +22,6 @@ for i=1:length(Peakedge)
     end
 end
 
-Peakedge(:,2)
 
 for jj=1:2:length(Peakedge)-1
     ED=zstr_dense(Peakedge(jj,2):Peakedge(jj+1,2));

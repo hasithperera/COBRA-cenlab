@@ -1,5 +1,6 @@
 # Matlab
 *.mat
+*.asv
 
 #folders
 ./Data/*

@@ -16,15 +16,15 @@ sample_b = 2;
 
 
 %change folder and id based on the setting you need to process
-folder_loc = b;
-id = id_b;
-sample = sample_b;
+folder_loc = a;
+id = id_a;
+sample = sample_a;
 
 physical_scale = 0.14462963;
 
 %settings
 export_VI_data = 0; %set to 1 to export ahe_ED.dat for each folder
-manual_peak_select = 1;
+manual_peak_select = 0;
 output_filename = 'Peakedge_5_raw.dat'
 
 
@@ -32,8 +32,8 @@ output_filename = 'Peakedge_5_raw.dat'
 % In this mode select 6 point to detect the 3 peaks
 % this is done in 2 ranges for the film and the substrate
 
-peak_extract = 0;
-peakedge_file = 'Peakedge_5.dat';
+peak_extract = 1;
+peakedge_file = 'Peakedge_5_raw.dat';
 
 
 visualize_selection = 0;
@@ -41,12 +41,12 @@ visualize_selection = 0;
 % subplot_y = 2;
 
 % sample 2
-subplot_x = 3;
-subplot_y = 3;
+% subplot_x = 3;
+% subplot_y = 3;
 
-summary_location = 'C:\Users\HasithPerera\Documents\MATLAB\COBRA\Data\summary\'
+summary_location = 'C:\Users\HasithPerera\Documents\MATLAB\COBRA-cenlab\Data\'
 
-%peak extraction
+% peak extraction
 % ahe_peak(zstr,peakedge,step_size)
 % this function contains functions from Dr. Zhou
 % Return : CoM,CoArea
@@ -67,9 +67,14 @@ for i = 1:length(id)
         
         
         %load other scan line Se_capped/ahe_7 as ref
-        dat_old = load('C:\Users\HasithPerera\Documents\MATLAB\COBRA\Cheng_Cen_EPSCoR_Project_Light_Induced_FeSe_STO\Analysis for Se_capped FeSe_SrTiO3\00L Analysis\ahe_7\zstr.dat')
+        
+        if exist('dat_old')==0
+            dat_old = load('C:\Users\HasithPerera\Documents\MATLAB\COBRA\Cheng_Cen_EPSCoR_Project_Light_Induced_FeSe_STO\Analysis for Se_capped FeSe_SrTiO3\00L Analysis\ahe_7\zstr.dat');
+        end
+        
         plot(dat_old)
         hold on
+        
         plot(dat)
         %ylim([-.0005 .02])
         %         xlim([50 150])
@@ -104,7 +109,9 @@ for i = 1:length(id)
     %peak extraction
     if peak_extract ==1
         peakedge = load(strcat(folder_loc,'ahe_',num2str(id(i)),'\',peakedge_file));
-        
+        if contains(peakedge_file,'raw')
+            peakedge = format_rawpeak(peakedge)
+        end
         [CoM,CoArea] = ahe_peakdetect(dat,peakedge,physical_scale,0)
         
         %save to file
@@ -122,21 +129,26 @@ for i = 1:length(id)
     if visualize_selection == 1
         
         subplot(subplot_y,subplot_x,i)
-        
+
         peakedge = load(strcat(folder_loc,'ahe_',num2str(id(i)),'\',peakedge_file));
-        [CoM,CoA] = ahe_peakdetect(dat,peakedge,physical_scale,1)
         
+        if contains(peakedge_file,'raw')
+            %correction for raw peakdata
+            peakedge = format_rawpeak(peakedge);
+        end
+         [CoM,CoA] = ahe_peakdetect(dat,peakedge,physical_scale,1);
         for pk = 1:2:length(CoA)
             plot(CoA(pk)*[1 1],[0 .08],':black')
         end
-        xlim([30 60])
+       
+        %         xlim([30 60])
         ylim([0 0.08])
         title(strcat('scan id:',num2str(id(i))))
     end
 end
 
 if visualize_selection ==1
-    ahe_plot()
+%     ahe_plot()
 end
 
 
