@@ -32,11 +32,11 @@ output_filename = 'Peakedge_5_raw.dat'
 % In this mode select 6 point to detect the 3 peaks
 % this is done in 2 ranges for the film and the substrate
 
-peak_extract = 1;
+peak_extract = 0;
 peakedge_file = 'Peakedge_5_raw.dat';
 
 
-visualize_selection = 0;
+visualize_selection = 1;
 % subplot_x = 2;
 % subplot_y = 2;
 
@@ -128,7 +128,7 @@ for i = 1:length(id)
     % code to show selection plots
     if visualize_selection == 1
         
-        subplot(subplot_y,subplot_x,i)
+%         subplot(subplot_y,subplot_x,i)
 
         peakedge = load(strcat(folder_loc,'ahe_',num2str(id(i)),'\',peakedge_file));
         
