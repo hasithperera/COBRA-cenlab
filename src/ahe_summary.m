@@ -8,7 +8,7 @@ sample_a = 1
 
 %Se_Si capped
 b = 'C:\Users\HasithPerera\Documents\MATLAB\COBRA\Cheng_Cen_EPSCoR_Project_Light_Induced_FeSe_STO\Analysis for Se_Si_capped\';
-% = [182,184,186,274,352,358];
+% = [9,149,176,182,184,186,274,352,358];
 id_b = [9,149,176,182,184,186,274,352,358];
 sample_b = 2;
 
@@ -16,16 +16,16 @@ sample_b = 2;
 
 
 %change folder and id based on the setting you need to process
-folder_loc = a;
-id = id_a;
-sample = sample_a;
+folder_loc = b;
+id = id_b;
+sample = sample_b;
 
 physical_scale = 0.14462963;
 
 %settings
 export_VI_data = 0; %set to 1 to export ahe_ED.dat for each folder
 manual_peak_select = 0;
-output_filename = 'Peakedge_5_raw.dat'
+output_filename = 'Peakedge_6_raw.dat'
 
 
 %Manual peak selection
@@ -33,7 +33,7 @@ output_filename = 'Peakedge_5_raw.dat'
 % this is done in 2 ranges for the film and the substrate
 
 peak_extract = 0;
-peakedge_file = 'Peakedge_5_raw.dat';
+peakedge_file = 'Peakedge_6_raw.dat';
 
 
 visualize_selection = 1;
@@ -41,8 +41,8 @@ visualize_selection = 1;
 % subplot_y = 2;
 
 % sample 2
-% subplot_x = 3;
-% subplot_y = 3;
+subplot_x = 3;
+subplot_y = 3;
 
 summary_location = 'C:\Users\HasithPerera\Documents\MATLAB\COBRA-cenlab\Data\'
 
@@ -80,7 +80,7 @@ for i = 1:length(id)
         %         xlim([50 150])
         %         xlim([220 inf])
         %         break
-        pk_edge = ginput(16);
+        pk_edge = ginput(21);
         
         %         %selecting the top film
         %         xlim([250 450])
@@ -128,7 +128,7 @@ for i = 1:length(id)
     % code to show selection plots
     if visualize_selection == 1
         
-%         subplot(subplot_y,subplot_x,i)
+        subplot(subplot_y,subplot_x,i)
 
         peakedge = load(strcat(folder_loc,'ahe_',num2str(id(i)),'\',peakedge_file));
         
@@ -141,14 +141,14 @@ for i = 1:length(id)
             plot(CoA(pk)*[1 1],[0 .08],':black')
         end
        
-        %         xlim([30 60])
+        xlim([30 60])
         ylim([0 0.08])
         title(strcat('scan id:',num2str(id(i))))
     end
 end
 
 if visualize_selection ==1
-%     ahe_plot()
+     ahe_plot()
 end
 
 
