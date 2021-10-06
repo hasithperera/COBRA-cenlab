@@ -4,7 +4,7 @@ f1 = gcf();
 set(f1,'Color',[1 1 1])
 %set font for all subplots
 for ax = get(f1,'Children');
-    set(ax,'FontSize',14);
+    set(ax,'FontSize',16);
 
      set(ax,'LineWidth',2);
     lines = get(ax,'Children');
