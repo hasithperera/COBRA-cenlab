@@ -38,7 +38,7 @@ for exp_id=1:5
         raw_CTR = load(file_name);
 
         
-        CTR_sig = interp1(raw_CTR(:,1),raw_CTR(:,2),qz,'pchip');
+        CTR_sig = interp1(raw_CTR(:,1),abs(raw_CTR(:,2)),qz,'pchip');
                 
         lamda = exp_dat.lamda
         L = qz;
